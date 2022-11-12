@@ -15,6 +15,7 @@ public class StockTransactionAdapter implements JsonDeserializer<StockTransactio
 
     @Override
     public StockTransaction deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        // Determine the correct type to deserialize.
         JsonObject obj = json.getAsJsonObject();
 
         if (!obj.get("dividend").getAsString().isBlank()) {

@@ -31,6 +31,7 @@ public class Account {
 
     public void trade(Trade transaction) {
         if (!shares.containsKey(transaction.getStock())) {
+            // If the user is buying, create a share for the stock if it doesn't exist.
             if (transaction.getAction() == TradeActions.BUY) {
                 shares.put(transaction.getStock(), new Share(
                         transaction.getStock(),
@@ -43,7 +44,7 @@ public class Account {
         }
 
         Share share = shares.get(transaction.getTicker());
-
+        
         share.trade(transaction);
     }
 

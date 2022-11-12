@@ -3,6 +3,7 @@ package com.favorlock.challenge.models.transaction;
 import com.favorlock.challenge.enums.TradeActions;
 import com.favorlock.challenge.models.Account;
 import com.favorlock.challenge.models.Share;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -14,6 +15,7 @@ public class TransactionStatement {
     public static final SimpleDateFormat SHORT_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     public static final DecimalFormat MONEY_FORMAT = new DecimalFormat("$###.00");
 
+    @Getter
     private final String contents;
 
     public TransactionStatement(Account account, List<Transaction> transaction) {
