@@ -32,15 +32,18 @@ public class Application {
             throw new RuntimeException("Could not locate input file or contents are corrupt.");
         }
 
+        // Deserialize the input data to TransactionLog type using GSON.
         TransactionLog log = gson.fromJson(reader, TransactionLog.class);
-        StatementGenerator generator = new StatementGenerator(log);
+        // Generate statement from transaction log.
+        AccountStatement statement = new AccountStatement(log);
 
-        return generator.toString();
+        return statement.toString();
     }
 
     public static void main(String... args) {
         instance = new Application();
 
+        // Just printing the output to console for now.
         System.out.println(instance.generateStatement("./input.json"));
     }
 }

@@ -9,14 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-public class StatementGenerator {
+public class AccountStatement {
     private final TransactionLog log;
 
     private final List<TransactionStatement> transactionStatements;
 
     private final Account account;
 
-    public StatementGenerator(TransactionLog log) {
+    public AccountStatement(TransactionLog log) {
         this.log = log;
         this.transactionStatements = new ArrayList<>();
         this.account = new Account();
@@ -33,8 +33,13 @@ public class StatementGenerator {
         List<Transaction> transactionToProcess = new ArrayList<>();
 
         while (!stack.isEmpty()) {
+            // Pop the next transaction to check from the stack.
             Transaction transaction = stack.pop();
 
+            /*
+             If the previous date is null or a different date altogether we must process the next batch of transactions,
+             clear the list, and set the date for the current transaction.
+             */
             if (date == null || !date.equals(TransactionStatement.SHORT_DATE_FORMAT.format(transaction.getDate()))) {
                 process(transactionToProcess);
 
@@ -43,9 +48,11 @@ public class StatementGenerator {
                 date = TransactionStatement.SHORT_DATE_FORMAT.format(transaction.getDate());
             }
 
+            // Queue the current transaction for processing.
             transactionToProcess.add(transaction);
         }
 
+        // Process remaining transactions.
         process(transactionToProcess);
     }
 
@@ -54,12 +61,14 @@ public class StatementGenerator {
             return;
         }
 
+        // Filter transactions to those that affect the account.
         List<Transaction> processed = transactions.stream().filter(account::process).toList();
 
         if (processed.isEmpty()) {
             return;
         }
 
+        // Add a transaction statement for the processed transactions.
         transactionStatements.add(new TransactionStatement(account, processed));
     }
 
@@ -71,6 +80,7 @@ public class StatementGenerator {
 
         StringBuilder builder = new StringBuilder();
 
+        // Generate account statement from transaction statements.
         transactionStatements.forEach(statement -> builder.append(statement.toString()));
 
         return builder.toString();
