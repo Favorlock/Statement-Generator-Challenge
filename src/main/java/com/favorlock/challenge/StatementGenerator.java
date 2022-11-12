@@ -45,6 +45,8 @@ public class StatementGenerator {
 
             transactionToProcess.add(transaction);
         }
+
+        process(transactionToProcess);
     }
 
     private void process(List<Transaction> transactions) {
