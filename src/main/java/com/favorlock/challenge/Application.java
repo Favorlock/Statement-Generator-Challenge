@@ -12,14 +12,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 
-public class StatementGenerator {
-    private static StatementGenerator instance;
+public class Application {
+    private static Application instance;
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
     private Gson gson;
 
-    public StatementGenerator() {
+    public Application() {
         gson = new GsonBuilder()
                 .setDateFormat(dateFormat.toPattern())
                 .registerTypeAdapter(StockAction.class, new StockActionAdapter())
@@ -36,7 +36,7 @@ public class StatementGenerator {
     }
 
     public static void main(String... args) {
-        instance = new StatementGenerator();
+        instance = new Application();
 
         String statement;
 
