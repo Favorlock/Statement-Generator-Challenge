@@ -5,6 +5,6 @@ import lombok.Getter;
 import java.math.BigDecimal;
 
 @Getter
-public class DividendPaid {
+public class DividendPayout {
     private BigDecimal dividend;
 }
