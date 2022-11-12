@@ -1,9 +1,11 @@
 package com.favorlock.challenge.models;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 
 import java.util.List;
 
+@Getter
 public class ActionLog {
     private List<Trade> actions;
 
